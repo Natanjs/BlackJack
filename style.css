@@ -1,0 +1,9 @@
+/* estilização geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2E7D32;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
