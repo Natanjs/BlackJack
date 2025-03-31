@@ -1,7 +1,7 @@
 /* estilização geral */
 body {
     font-family: Arial, sans-serif;
-    background-color: #115874;
+    background-color: #0c4157;
     color: white;
     text-align: center;
     margin: 0;
@@ -76,4 +76,26 @@ h1 {
 /* Cor vermelha para cartas de copas (♥) e ouros (♦) */
 .card[data-red="true"] {
     color: red;
+}
+
+/* estilização dos botões*/
+button {
+    background-color: #ececec;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+/*estilização do resultado que vai ser impresso quando ocorrer vitoria,derrota ou empate*/
+#resultado {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
 }
