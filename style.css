@@ -90,6 +90,22 @@ button {
     transition: transform 0.2s, background 0.3s;
 }
 
+/* estilização 'extra' para melhorar os botões*/
+.controles {
+    display: flex;
+    flex-direction: column;  
+    gap: 10px;               
+    margin-top: 10px;
+}
+
+
+button:hover {
+    background-color: #FFC107;
+    transform: scale(1.1);
+}
+
+
+
 /*estilização do resultado que vai ser impresso quando ocorrer vitoria,derrota ou empate*/
 #resultado {
     font-size: 1.8em;

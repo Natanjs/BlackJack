@@ -49,3 +49,20 @@ const oponenteJoga = estado => {
     const novoEstado = {...estado, oponente: novoOponente, indiceBaralho: estado.indiceBaralho + 1}
     return oponenteJoga(novoEstado) 
 }
+
+// Definir vencedor
+const definirVencedor = estado => {
+    const pontosJogador = calcularValor(estado.jogador.cartas);
+    const pontosOponente = calcularValor(estado.oponente.cartas);
+    if (pontosJogador > 21) return "perdeu";
+    if (pontosOponente > 21 || pontosJogador > pontosOponente) return "ganhou";
+    if (pontosJogador === pontosOponente) return "empate";
+    return "perdeu";
+};
+
+// Renderização das cartas com cor baseada no naipe
+const renderizarCarta = (carta) => {
+    const naipesVermelhos = ["♥", "♦"];
+    const isRed = naipesVermelhos.includes(carta.carta.slice(-1)); // Verifica o último caractere (naipe)
+    return `<div class="card" ${isRed ? 'data-red="true"' : ""}>${carta.carta}</div>`;
+};
