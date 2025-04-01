@@ -59,7 +59,6 @@ const oponenteJoga = estado => {
 const definirVencedor = estado => {
     const pontosJogador = calcularValor(estado.jogador.cartas)
     const pontosOponente = calcularValor(estado.oponente.cartas)
-    
     if (pontosJogador > 21) return "perdeu" 
     if (pontosOponente > 21 || pontosJogador > pontosOponente) return "ganhou" 
     if (pontosJogador === pontosOponente) return "empate" 
@@ -69,8 +68,7 @@ const definirVencedor = estado => {
 // função para renderizar uma carta na tela baseada na cor do naipe
 const renderizarCarta = (carta) => {
     const naipesVermelhos = ["♥", "♦"]
-    const isRed = naipesVermelhos.includes(carta.carta.slice(-1)) // verifica tem o naipe vermelho
-    
+    const isRed = naipesVermelhos.includes(carta.carta.slice(-1)) // verifica tem o naipe vermelho   
     return `<div class="card" ${isRed ? 'data-red="true"' : ""}>${carta.carta}</div>` // aplica estilo e retorna HTML
 }
 
@@ -85,3 +83,24 @@ const atualizarTela = (estado) => {
     estado.status === "perdeu"? "Você perdeu!":
     estado.status === "empate"? "Empate!": ""
 }
+
+// função para iniciar o jogo, dar utilidade aos botões e fazer o placar funcionar
+const iniciar = (estado = inicializarJogo()) => {
+    atualizarTela(estado);
+    document.getElementById("comprar").onclick = () => {  
+        const novoEstado = jogadorCompra(estado);
+        iniciar(novoEstado);
+    };
+    document.getElementById("parar").onclick = () => {    
+        const novoEstado = oponenteJoga(estado);
+        const novoPlacar = {
+            jogador: novoEstado.status === "ganhou" ? estado.placar.jogador + 1 : estado.placar.jogador,
+            oponente: novoEstado.status === "perdeu" ? estado.placar.oponente + 1 : estado.placar.oponente
+        };
+        iniciar({ ...novoEstado, placar: novoPlacar });
+    };
+    document.getElementById("reiniciar").onclick = () => iniciar(inicializarJogo(estado.placar));
+};
+
+// Inicializar o jogo
+iniciar();
