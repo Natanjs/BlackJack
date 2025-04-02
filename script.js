@@ -73,6 +73,14 @@ const atualizarPlacar = (estado) => {
     }
     return { ...estado, placar: novoPlacar }
 }
+// verifica o resultado atual do jogo
+const verificarResultado = estado => {
+    const pontosJogador = calcularValor(estado.jogador.cartas)
+    const pontosOponente = calcularValor(estado.oponente.cartas)
+    if (pontosJogador > 21) return { ...estado, status: "perdeu" }
+    if (pontosOponente > 21) return { ...estado, status: "ganhou" }
+    return estado
+}
 // função para renderizar uma carta na tela baseada na cor do naipe
 const renderizarCarta = (carta) => {
     const naipesVermelhos = ["♥", "♦"]
