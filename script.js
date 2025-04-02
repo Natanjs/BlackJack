@@ -64,7 +64,15 @@ const definirVencedor = estado => {
     if (pontosJogador === pontosOponente) return "empate" 
     return "perdeu" 
 }
-
+// funcao para atualizar o placar
+const atualizarPlacar = (estado) => {
+    if (estado.status === "jogando" || estado.status === "empate") return estado
+    const novoPlacar = {
+        jogador: estado.status === "ganhou" ? estado.placar.jogador + 1 : estado.placar.jogador,
+        oponente: estado.status === "perdeu" ? estado.placar.oponente + 1 : estado.placar.oponente
+    }
+    return { ...estado, placar: novoPlacar }
+}
 // função para renderizar uma carta na tela baseada na cor do naipe
 const renderizarCarta = (carta) => {
     const naipesVermelhos = ["♥", "♦"]
