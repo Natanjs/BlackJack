@@ -135,12 +135,14 @@ const processarRodada = estado => {
 const iniciar = (estado = inicializarJogo()) => {
     atualizarTela(estado)
     document.getElementById("comprar").onclick = () => {  
+        if (estado.status !== "jogando") return
         const estadoAposJogador = jogadorCompra(estado)
         const novoEstado = estadoAposJogador.status === "jogando" ?
         processarRodada(estadoAposJogador) : estadoAposJogador
         iniciar(atualizarPlacar(novoEstado))
     }
-    document.getElementById("parar").onclick = () => {    
+    document.getElementById("parar").onclick = () => {
+        if (estado.status !== "jogando") return    
         const novoEstado = oponenteJoga(estado)
         iniciar(atualizarPlacar(novoEstado))
     }
