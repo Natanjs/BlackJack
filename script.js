@@ -1,11 +1,12 @@
-// Criação do baralho com símbolos
+// criação do baralho com símbolos
 const criarBaralho = () => {
     const valores = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
     const naipes = ["♠", "♥", "♣", "♦"]
-    return naipes.flatMap(naipe => valores.map(valor => ({
-            carta: `${valor}${naipe}`, //representa a carta com valor e naipe
-            valor: valor === "A" ? 11 : ["J", "Q", "K"].includes(valor) ? 10 :
-            parseInt(valor)}))).sort(() => Math.random() - 0.5) // Embaralha o baralho 
+    return naipes.reduce((baralho, naipe) => {
+       const cartasDoNaipe = valores.map(valor => ({
+        carta: `${valor}${naipe}`, // representa a carta com valor e naipe
+        valor: valor === "A" ? 11 : ["J", "Q", "K"].includes(valor) ? 10 : parseInt(valor)}))
+         return baralho.concat(cartasDoNaipe)},[]).sort(() => Math.random() - 0.5) // embaralha o baralho e concatena as cartas do naipe atual ao baralho
 }
 
 // função para calcular o valor das cartas
@@ -50,6 +51,16 @@ const oponenteCompra = estado => {
     const novosPontosOponente = calcularValor(novoOponente.cartas)
     if (novosPontosOponente > 21) {
         return { ...novoEstado, status: "ganhou" }
+    }    const criarBaralho = () => {
+        const valores = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+        const naipes = ["♠", "♥", "♣", "♦"]
+        return naipes.reduce((baralho, naipe) => {
+            const cartasDoNaipe = valores.map(valor => ({
+                carta: `${valor}${naipe}`, // representa a carta com valor e naipe
+                valor: valor === "A" ? 11 : ["J", "Q", "K"].includes(valor) ? 10 : parseInt(valor)
+            }))
+            return baralho.concat(cartasDoNaipe) // concatena as cartas do naipe atual ao baralho
+        }, []).sort(() => Math.random() - 0.5) // embaralha o baralho
     }
     return novoEstado
 }
