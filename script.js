@@ -15,11 +15,11 @@ const calcularValor = cartas => {
     const soma = valores.reduce((acc, val) => acc + val, 0)  
     const ases = valores.filter(val => val === 11).length // Conta quantos ases existem na mão   
     return soma > 21 && ases > 0 ?
-    calcularValor(cartas.slice(1).concat({ valor: 1 })) : soma // Se a soma ultrapassar 21 e houver ases ajusta o valor do ás para 1
+    calcularValor(cartas.slice(1).concat({ valor: 1 })) : soma // se a soma ultrapassar 21 e houver  ases ajusta o valor do ás para 1
 }
 
 // inicialização do jogo
-const inicializarJogo = (placar = { jogador: 0, oponente: 0 }) => {
+const inicializarJogo = (placar = {jogador: 0, oponente: 0 }) => {
     const baralho = criarBaralho()
     return {
         baralho,jogador: { cartas: [baralho[0], baralho[2]] }, // O jogador começa com duas cartas
@@ -31,15 +31,28 @@ const inicializarJogo = (placar = { jogador: 0, oponente: 0 }) => {
 // permite que o jogador compre uma nova carta
 const jogadorCompra = estado => {
     if (estado.status !== "jogando") return estado
-    
     const novaCarta = estado.baralho[estado.indiceBaralho] // obtém a próxima carta do baralho
-    const novoJogador = { cartas: [...estado.jogador.cartas, novaCarta] } // Adiciona a carta à mão do jogador
-    
+    const novoJogador = { cartas: [...estado.jogador.cartas, novaCarta] } // adiciona a carta à mão do jogador
     const pontos = calcularValor(novoJogador.cartas) 
     return pontos > 21 ? { ...estado, jogador: novoJogador, status: "perdeu" } :
            { ...estado, jogador: novoJogador, indiceBaralho: estado.indiceBaralho + 1 } // atualiza o estado do jogo
 }
-
+//o oponente compra uma carta
+const oponenteCompra = estado => {
+    if (estado.status !== "jogando") return estado
+    const pontosOponente = calcularValor(estado.oponente.cartas)
+    if (pontosOponente >= 17) {
+        return verificarResultado(estado)
+    }
+    const novaCarta = estado.baralho[estado.indiceBaralho]
+    const novoOponente = { cartas: [...estado.oponente.cartas, novaCarta] }
+    const novoEstado = { ...estado, oponente: novoOponente, indiceBaralho: estado.indiceBaralho + 1 }
+    const novosPontosOponente = calcularValor(novoOponente.cartas)
+    if (novosPontosOponente > 21) {
+        return { ...novoEstado, status: "ganhou" }
+    }
+    return novoEstado
+}
 // oponente jogando
 const oponenteJoga = estado => {
     if (estado.status !== "jogando") return estado
@@ -59,10 +72,12 @@ const oponenteJoga = estado => {
 const definirVencedor = estado => {
     const pontosJogador = calcularValor(estado.jogador.cartas)
     const pontosOponente = calcularValor(estado.oponente.cartas)
-    if (pontosJogador > 21) return "perdeu" 
+    if (pontosJogador > 21) return "perdeu"
+    if (pontosJogador === 21) return "ganhou"
+    if (pontosOponente === 21) return "perdeu"
     if (pontosOponente > 21 || pontosJogador > pontosOponente) return "ganhou" 
     if (pontosJogador === pontosOponente) return "empate" 
-    return "perdeu" 
+    if (pontosOponente > 21) return "perdeu" 
 }
 // funcao para atualizar o placar
 const atualizarPlacar = (estado) => {
@@ -79,6 +94,8 @@ const verificarResultado = estado => {
     const pontosOponente = calcularValor(estado.oponente.cartas)
     if (pontosJogador > 21) return { ...estado, status: "perdeu" }
     if (pontosOponente > 21) return { ...estado, status: "ganhou" }
+    if( pontosJogador === 21) return { ...estado, status: "ganhou" }
+    if(pontosOponente === 21) return { ...estado, status: "perdeu" }
     return estado
 }
 // função para renderizar uma carta na tela baseada na cor do naipe
@@ -99,24 +116,25 @@ const atualizarTela = (estado) => {
     estado.status === "perdeu"? "Você perdeu!":
     estado.status === "empate"? "Empate!": ""
 }
-
-// função para iniciar o jogo, dar utilidade aos botões e fazer o placar funcionar
+//função para processar uma rodada
+const processarRodada = estado => {
+    if (estado.status !== "jogando") return estado
+    return oponenteCompra(estado)
+}
 const iniciar = (estado = inicializarJogo()) => {
-    atualizarTela(estado);
+    atualizarTela(estado)
     document.getElementById("comprar").onclick = () => {  
-        const novoEstado = jogadorCompra(estado);
-        iniciar(novoEstado);
-    };
+        const estadoAposJogador = jogadorCompra(estado)
+        const novoEstado = estadoAposJogador.status === "jogando" ?
+        processarRodada(estadoAposJogador) : estadoAposJogador
+        iniciar(atualizarPlacar(novoEstado))
+    }
     document.getElementById("parar").onclick = () => {    
-        const novoEstado = oponenteJoga(estado);
-        const novoPlacar = {
-            jogador: novoEstado.status === "ganhou" ? estado.placar.jogador + 1 : estado.placar.jogador,
-            oponente: novoEstado.status === "perdeu" ? estado.placar.oponente + 1 : estado.placar.oponente
-        };
-        iniciar({ ...novoEstado, placar: novoPlacar });
-    };
-    document.getElementById("reiniciar").onclick = () => iniciar(inicializarJogo(estado.placar));
-};
+        const novoEstado = oponenteJoga(estado)
+        iniciar(atualizarPlacar(novoEstado))
+    }
+    document.getElementById("reiniciar").onclick = () => iniciar(inicializarJogo(estado.placar))
+}
 
-// Inicializar o jogo
-iniciar();
+//inicializar o jogo
+iniciar()
