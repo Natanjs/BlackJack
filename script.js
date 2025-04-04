@@ -11,13 +11,15 @@ const criarBaralho = () => {
 
 // função para calcular o valor das cartas
 const calcularValor = cartas => {
-    // Pega  os valores das cartas
-    const valores = cartas.map(carta => carta.valor)
-    const soma = valores.reduce((acc, val) => acc + val, 0)  
-    const ases = valores.filter(val => val === 11).length // Conta quantos ases existem na mão   
-    return soma > 21 && ases > 0 ?
-    calcularValor(cartas.slice(1).concat({ valor: 1 })) : soma // se a soma ultrapassar 21 e houver  ases ajusta o valor do ás para 1
-}
+        // Pega  os valores das cartas
+        const valores = cartas.map(c => c.valor)
+        const soma = valores.reduce((acc, val) => acc + val, 0) // soma todos os valores considerando o ás como 11
+        const ases = valores.filter(val => val === 11).length // conta quantos ases valem 11, inicialmente todos valem
+        return Array.from({ length: ases }).reduce(   // troca o ás de 11 para 1 caso a soma das cartas ultrapasse 21
+            (total, _) => total > 21 ? total - 10 : total, 
+            soma
+        )
+    }
 
 // inicialização do jogo
 const inicializarJogo = (placar = {jogador: 0, oponente: 0 }) => {
@@ -88,7 +90,7 @@ const definirVencedor = estado => {
     if (pontosOponente === 21) return "perdeu"
     if (pontosOponente > 21 || pontosJogador > pontosOponente) return "ganhou" 
     if (pontosJogador === pontosOponente) return "empate" 
-    if (pontosOponente > 21) return "perdeu" 
+    return "perdeu" 
 }
 // funcao para atualizar o placar
 const atualizarPlacar = (estado) => {
