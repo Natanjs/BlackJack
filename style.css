@@ -1,11 +1,15 @@
 /* estilização geral */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #0c4157;
+    font-family: Andale Mono, monospace;
     color: white;
     text-align: center;
+    padding: 10px;
+    background-image: url('imagem/fundo.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
     margin: 0;
-    padding: 20px;
 }
 .container{
     display: flex;
@@ -13,59 +17,50 @@ body {
     align-items: center;
 }
 
-h1 {
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-
 #placar {
-    font-size: 1.5em; 
-    font-weight: bold; 
-    text-align: center;
-    color: white; 
-    padding: 10px 20px; 
-    border-radius: 10px; 
-    box-shadow: 0.1px 4px 10px rgba(0, 0, 0, 0.5);
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
-    display: inline-block;
-    border: 0.4px solid black;
-    background-color: rgba(0, 0, 0, 0.4)
+    font-size: 3em;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    color: white;
+    width: fit-content;
+    margin: 20px  auto 0;
+  }
  
-}
-
 /* estilização da mesa */
 .mesa {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 200px;
 }
 
 .jogador, .oponente {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .cartas {
     display: flex;
     gap: 10px;
     justify-content: center;
-    align-items: center;
-}
-
-.cartas .card {
-    position: relative;
+    min-height: 140px;
 }
 
 
 .pontos {
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-weight: bold;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
     border-radius: 5px;
 }
 
@@ -74,53 +69,63 @@ h1 {
     width: 80px;
     height: 120px;
     background-color: white;
-    color: black; /*cor padrão para espadas e paus*/
+    color: black; /*Cor padrão para espadas e paus*/
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5em;
     font-weight: bold;
     border-radius: 10px;
-    box-shadow: 20px 9px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
     border: 2px solid #000;
 }
 
-/* cor vermelha para cartas de copas e ouros*/
+
+/* Cor vermelha para cartas de copas (♥) e ouros (♦) */
 .card[data-red="true"] {
     color: red;
 }
 
 /* estilização dos botões*/
 button {
-    background-color: #ececec;
+    background-color: #ffffff;
     color: black;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
     border: none;
-    padding: 10px 20px;
-    font-size: 1.2em;
+    padding: 20px 100px;
+    font-size: 1.5em;
     border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.1s, background 0.3s;
+    transition: transform 0.2s, background 0.3s;
+    font-weight: bold;
+    
 }
 
-/* estilização para melhorar os botões*/
+
+/* estilização 'extra' para melhorar os botões*/
 .controles {
     display: flex;
-    flex-direction: column;  
-    gap: 10px;               
-    margin-top: 10px;
+    flex-direction: row;     
+    justify-content: center; 
+    gap: 20px;               
+    margin-top: 200px;        
 }
 
 button:hover {
-    background-color: #FFC107;
+    background-color: #d3d3d3d3;
     transform: scale(1.1);
 }
 
 /*estilização do resultado que vai ser impresso quando ocorrer vitoria,derrota ou empate*/
 #resultado {
-    font-size: 1.8em;
+    font-size: 2.0em;
     font-weight: bold;
-    margin-top: 20px;
-    background: rgba(0, 0, 0, 0.5);
+    margin-top: -100px;
+    background: rgba(0, 0, 0, 0.4);
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+#resultado:empty {
+    display: none;
 }

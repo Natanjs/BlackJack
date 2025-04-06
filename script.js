@@ -124,7 +124,7 @@ const atualizarTela = (estado) => {
     document.getElementById("oponente-cartas").innerHTML = estado.oponente.cartas.map(renderizarCarta).join("")
     document.getElementById("jogador-pontos").textContent = calcularValor(estado.jogador.cartas)
     document.getElementById("oponente-pontos").textContent = calcularValor(estado.oponente.cartas)
-    document.getElementById("placar").textContent = `Jogador: ${estado.placar.jogador} | Oponente: ${estado.placar.oponente}`
+    document.getElementById("placar").textContent = `${estado.placar.jogador} - ${estado.placar.oponente}`
     document.getElementById("resultado").textContent = estado.status === "ganhou" ? "Você venceu!" :
     estado.status === "perdeu"? "Você perdeu!":
     estado.status === "empate"? "Empate!": ""
