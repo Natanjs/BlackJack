@@ -1,3 +1,24 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const btnDescricao = document.getElementById("btn-comecar")
+    const modal = document.getElementById("modal-descricao")
+    const btnFechar = document.getElementById("fechar-modal")
+  
+    btnDescricao.addEventListener("click", () => {
+      modal.style.display = "flex"
+    })
+  
+    btnFechar.addEventListener("click", () => {
+      modal.style.display = "none"
+    })
+
+    // Fecha ao clicar fora da caixa
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none"
+      }
+    })
+  })
+  
 // criação do baralho com símbolos
 const criarBaralho = () => {
     const valores = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -53,23 +74,12 @@ const oponenteCompra = estado => {
     const novosPontosOponente = calcularValor(novoOponente.cartas)
     if (novosPontosOponente > 21) {
         return { ...novoEstado, status: "ganhou" }
-    }    const criarBaralho = () => {
-        const valores = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-        const naipes = ["♠", "♥", "♣", "♦"]
-        return naipes.reduce((baralho, naipe) => {
-            const cartasDoNaipe = valores.map(valor => ({
-                carta: `${valor}${naipe}`, // representa a carta com valor e naipe
-                valor: valor === "A" ? 11 : ["J", "Q", "K"].includes(valor) ? 10 : parseInt(valor)
-            }))
-            return baralho.concat(cartasDoNaipe) // concatena as cartas do naipe atual ao baralho
-        }, []).sort(() => Math.random() - 0.5) // embaralha o baralho
-    }
+    }    
     return novoEstado
 }
 // oponente jogando
 const oponenteJoga = estado => {
     if (estado.status !== "jogando") return estado
-    
     const pontosOponente = calcularValor(estado.oponente.cartas)
     if (pontosOponente >= 17) {
         return { ...estado, status: definirVencedor(estado) } // O oponente para de jogar se tiver 17 pontos ou mais

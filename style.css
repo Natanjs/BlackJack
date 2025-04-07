@@ -11,6 +11,63 @@ body {
     height: 100vh;
     margin: 0;
 }
+
+/* Fundo escuro do modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Caixa do modal */
+  .modal-conteudo {
+    background-color: #111010;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    max-width: 500px;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    animation: zoomIn 0.3s ease;
+  }
+  
+  /* Botão fechar */
+  .fechar {
+    position: absolute;
+    top: 20px; right: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  @keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+#btn-comecar {
+    display: flex;
+    justify-content:baseline;
+    padding: 10px 20px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+#btn-comecar:hover {
+    background-color: #67e0fb;
+    transform: scale(1.05);
+}
+
 .container{
     display: flex;
     flex-direction: column;
