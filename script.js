@@ -1,25 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const btnDescricao = document.getElementById("btn-comecar")
-    const modal = document.getElementById("modal-descricao")
-    const btnFechar = document.getElementById("fechar-modal")
-  
-    btnDescricao.addEventListener("click", () => {
-      modal.style.display = "flex"
-    })
-  
-    btnFechar.addEventListener("click", () => {
-      modal.style.display = "none"
-    })
-
-    // Fecha ao clicar fora da caixa
-    window.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        modal.style.display = "none"
-      }
-    })
-  })
-  
-// criação do baralho com símbolos
+  // criação do baralho com símbolos
 const criarBaralho = () => {
     const valores = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
     const naipes = ["♠", "♥", "♣", "♦"]
@@ -160,6 +139,22 @@ const iniciar = (estado = inicializarJogo()) => {
     }
     document.getElementById("reiniciar").onclick = () => iniciar(inicializarJogo(estado.placar))
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const botaoDescricao = document.getElementById("botaoDescricao")
+    const descricao = document.getElementById("descricao")
+    const fecharDescricao = document.getElementById("fecharDescricao")
+  
+    const abrirDescricao = () => descricao.style.display = "flex"
+    const fecharModalDescricao = () => descricao.style.display = "none"
+  
+    botaoDescricao.addEventListener("click", abrirDescricao)
+    fecharDescricao.addEventListener("click", fecharModalDescricao)
+  
+    window.addEventListener("click", (event) => {
+      if (event.target === descricao) fecharModalDescricao()
+    })
+  })
 
 //inicializar o jogo
 iniciar()

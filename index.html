@@ -8,12 +8,13 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-     <!-- descrição do jogo -->
-      <div id="menu">
-         <button id="btn-comecar">Descrição do Jogo</button>
-         <div id="modal-descricao" class="modal">
-          <div class="modal-conteudo">
-           <span class="fechar" id="fechar-modal">&times;</span>
+     <!-- Botão para abrir a descrição -->
+<button id="botaoDescricao">Sobre o jogo</button>
+
+<!-- Conteudo da descrição -->
+       <div id="descricao" class="modal">
+         <div class="modal-conteudo">
+           <span id="fecharDescricao"></span>
            <h2>🎴 Bem-vindo ao Black Jack!</h2>
            <p>Seu objetivo é somar o valor das cartas o mais próximo possível de <strong>21</strong>, sem ultrapassar.</p>
            <p>Você jogará contra o oponente, e vence quem estiver mais perto de 21 ao final da rodada.</p>
